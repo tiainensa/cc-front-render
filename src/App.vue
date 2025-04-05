@@ -37,17 +37,19 @@ export default {
     }
   },
   methods: {
-    analyzeSentiment() {
-      // Simulate API call with randomized data
-      setTimeout(() => {
-        const score = Math.random() * 2 - 1; // Random score between -1 and 1
-        this.sentiment = {
-          score: score,
-          label: score > 0 ? 'Positive' : score < 0 ? 'Negative' : 'Neutral'
-        }
-      }, 500)
-    }
-  }
+    async analyzeSentiment() {
+      try {
+        const response = await fetch("https://cc-backend-git-cloud-computing-2025-course.2.rahtiapp.fi/sentiment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: this.userInput }),
+        });
+        this.sentiment = await response.json();
+      } catch (error) {
+        console.error("Error analyzing sentiment:", error);
+      }
+    },
+  },
 }
 </script>
 
