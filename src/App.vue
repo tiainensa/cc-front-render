@@ -12,8 +12,8 @@
     <div v-if="sentiment" class="result">
       <h2>Analysis Result:</h2>
       <div :class="['sentiment-box', sentimentClass]">
-        <p>Sentiment: <strong>{{ sentiment.label.toLowerCase }}</strong></p>
-        <p>Score: <strong>{{ sentiment.score.toFixed(2) }}</strong></p>
+        <p>Sentiment: <strong>{{ sentiment.label?.toLowerCase }}</strong></p>
+        <p>Score: <strong>{{ sentiment.score?.toFixed(2) }}</strong></p>
       </div>
     </div>
   </div>
@@ -44,9 +44,21 @@ export default {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: this.userInput }),
         });
-        this.sentiment = await response.json();
+        const data = await response.json();
+
+        // Ensure the response contains the expected properties
+        if (data && data.sentiment && data.score !== undefined) {
+          this.sentiment = {
+            label: data.sentiment,
+            score: data.score,
+          };
+        } else {
+          console.error("Unexpected response format:", data);
+          this.sentiment = null;
+        }
       } catch (error) {
         console.error("Error analyzing sentiment:", error);
+        this.sentiment = null;
       }
     },
   },
