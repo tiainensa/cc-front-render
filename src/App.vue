@@ -31,8 +31,9 @@ export default {
   computed: {
     sentimentClass() {
       if (!this.sentiment) return '';
-      if (this.sentiment.label === 'positive') return 'positive';
-      if (this.sentiment.label === 'negative') return 'negative';
+      const label = this.sentiment.label?.toLowerCase();
+      if (label === 'positive') return 'positive';
+      if (label === 'negative') return 'negative';
       return 'neutral';
     }
   },
