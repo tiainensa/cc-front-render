@@ -11,8 +11,8 @@
     <button @click="analyzeSentiment">Analyze</button>
     <div v-if="sentiment" class="result">
       <h2>Analysis Result:</h2>
-      <div :class="['sentiment-box', sentiment.label.toLowerCase()]">
-        <p>Sentiment: <strong>{{ sentiment.sentiment }}</strong></p>
+      <div :class="['sentiment-box', sentimentClass]">
+        <p>Sentiment: <strong>{{ sentiment.label }}</strong></p>
         <p>Score: <strong>{{ sentiment.score.toFixed(2) }}</strong></p>
       </div>
     </div>
@@ -26,6 +26,14 @@ export default {
     return {
       userInput: '',
       sentiment: null
+    }
+  },
+  computed: {
+    sentimentClass() {
+      if (!this.sentiment) return '';
+      if (this.sentiment.label === 'positive') return 'positive';
+      if (this.sentiment.label === 'negative') return 'negative';
+      return 'neutral';
     }
   },
   methods: {
