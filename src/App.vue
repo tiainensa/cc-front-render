@@ -12,7 +12,7 @@
     <div v-if="sentiment" class="result">
       <h2>Analysis Result:</h2>
       <div :class="['sentiment-box', sentimentClass]">
-        <p>Sentiment: <strong>{{ sentiment.label?.toLowerCase }}</strong></p>
+        <p>Sentiment: <strong>{{ sentiment.label?.toLowerCase() }}</strong></p>
         <p>Score: <strong>{{ sentiment.score?.toFixed(2) }}</strong></p>
       </div>
     </div>
